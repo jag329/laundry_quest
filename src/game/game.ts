@@ -1,5 +1,6 @@
 import { Actor, BoxBody, CircleBody, FilledBox, FilledCircle, FilledPolygon, GridSystem, Hero, JetLagGameConfig, KeyCodes, ManualMovement, Obstacle, PolygonBody, initializeAndLaunch, stage } from "../jetlag";
-import { LaundryBasket } from "../game/LaundryBasket";
+import { LaundryBasket } from "./LaundryBasket";
+import { Player } from "./Player";
 
 /**
  * Screen dimensions and other game configuration, such as the names of all
@@ -28,25 +29,15 @@ function builder(_level: number) {
   // coordinates in the developer console.
   GridSystem.makeGrid(stage.world, { x: 0, y: 0 }, { x: 16, y: 9 });
 
-  // Make a "hero" who moves via keyboard control and appears as a circle
-  let hero = new Actor({
-    appearance: new FilledCircle({ radius: .5, fillColor: "#ff0000", lineWidth: .04, lineColor: "#00ff00" }),
-    rigidBody: new CircleBody({ cx: 5, cy: 2, radius: .5 }),
-    role: new Hero(),
-    movement: new ManualMovement(),
-  });
-
   let laundryBasket = new LaundryBasket("#f86d6d", 5, 6);
 
+  let player = new Player({
+    color: "#ff5900",
+    cx: 5,
+    cy: 4
+  })
   // Pressing a key will change the hero's velocity
-  stage.keyboard.setKeyUpHandler(KeyCodes.KEY_UP, () => (hero.movement as ManualMovement).updateYVelocity(0));
-  stage.keyboard.setKeyUpHandler(KeyCodes.KEY_DOWN, () => (hero.movement as ManualMovement).updateYVelocity(0));
-  stage.keyboard.setKeyUpHandler(KeyCodes.KEY_LEFT, () => (hero.movement as ManualMovement).updateXVelocity(0));
-  stage.keyboard.setKeyUpHandler(KeyCodes.KEY_RIGHT, () => (hero.movement as ManualMovement).updateXVelocity(0));
-  stage.keyboard.setKeyDownHandler(KeyCodes.KEY_UP, () => (hero.movement as ManualMovement).updateYVelocity(-5));
-  stage.keyboard.setKeyDownHandler(KeyCodes.KEY_DOWN, () => (hero.movement as ManualMovement).updateYVelocity(5));
-  stage.keyboard.setKeyDownHandler(KeyCodes.KEY_LEFT, () => (hero.movement as ManualMovement).updateXVelocity(-5));
-  stage.keyboard.setKeyDownHandler(KeyCodes.KEY_RIGHT, () => (hero.movement as ManualMovement).updateXVelocity(5));
+  
 }
 
 // call the function that starts running the game in the `game-player` div tag
