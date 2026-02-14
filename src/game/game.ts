@@ -1,6 +1,9 @@
-import { Actor, BoxBody, CircleBody, FilledBox, FilledCircle, FilledPolygon, GridSystem, Hero, JetLagGameConfig, KeyCodes, ManualMovement, Obstacle, PolygonBody, initializeAndLaunch, stage } from "../jetlag";
+import { Actor, BoxBody, CircleBody, FilledBox, FilledCircle, FilledPolygon, GridSystem, Hero, JetLagGameConfig, KeyCodes, ManualMovement, Obstacle, PolygonBody, initializeAndLaunch, stage, TimedEvent } from "../jetlag";
+import { DryingMachine } from "./DryingMachine";
 import { LaundryBasket } from "./LaundryBasket";
+import { Orderer } from "./Orderer";
 import { Player } from "./Player";
+import { WashingMachine } from "./WashingMachine";
 
 /**
  * Screen dimensions and other game configuration, such as the names of all
@@ -8,7 +11,7 @@ import { Player } from "./Player";
  */
 class Config implements JetLagGameConfig {
   // Use 16/9 for a game in landscape mode, and 9/16 for a game in portrait mode
-  aspectRatio = { width: 16, height: 9 };
+  aspectRatio = { width: 160, height: 90 };
   // Make this `false` when you're done debugging your game and are ready to
   // share it with the world.
   hitBoxes = true;
@@ -27,17 +30,34 @@ function builder(_level: number) {
   // Draw a grid on the screen, to help us think about the positions of actors.
   // Remember that when `hitBoxes` is true, clicking the screen will show
   // coordinates in the developer console.
-  GridSystem.makeGrid(stage.world, { x: 0, y: 0 }, { x: 16, y: 9 });
+  //GridSystem.makeGrid(stage.world, { x: 0, y: 0 }, { x: 16, y: 9 });
 
-  let laundryBasket = new LaundryBasket("#f86d6d", 5, 6);
+  //let laundryBasket = new LaundryBasket("#f4caca", 50, 60);
 
   let player = new Player({
     color: "#ff5900",
-    cx: 5,
-    cy: 4
-  })
-  // Pressing a key will change the hero's velocity
-  
+    cx: 50,
+    cy: 40
+  });
+
+  let washingMachine = new WashingMachine({
+    color: "#00ffea",
+    cx: 70,
+    cy: 40
+  });
+
+  let dryingMachine = new DryingMachine({
+    color: "#ff9d00",
+    cx: 90,
+    cy: 40
+  });
+
+  let orderer = Orderer.generateRandomOrderer({ cx: 15, cy: 80, width: 10, height: 10 });
+
+  // Set up a timer to update the basket position each frame when picked up
+  stage.world.timer.addEvent(new TimedEvent(0.001, true, () => {
+    player.updateBasket();
+  }));
 }
 
 // call the function that starts running the game in the `game-player` div tag
