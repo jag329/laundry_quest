@@ -1,4 +1,4 @@
-import { Actor, BoxBody, AppearanceComponent, FilledBox, StateEvent, StateManagerComponent, Passive, RoleComponent, Scene, InertMovement, MovementComponent, GestureHandlers, ManualMovement, TextSprite, Obstacle } from "../jetlag";
+import { Actor, BoxBody, FilledBox, ManualMovement, TextSprite, Obstacle } from "../jetlag";
 import { Player } from "./Player";
 
 /**

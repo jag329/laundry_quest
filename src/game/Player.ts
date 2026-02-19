@@ -1,9 +1,9 @@
-import { Actor, BoxBody, KeyCodes, AppearanceComponent, FilledBox, stage, Hero, StateEvent, StateManagerComponent, Passive, RoleComponent, Scene, InertMovement, MovementComponent, GestureHandlers, ManualMovement, TextSprite, FilledCircle, CircleBody } from "../jetlag";
+import { Actor, KeyCodes, stage, Hero,  ManualMovement, FilledCircle, CircleBody } from "../jetlag";
 import { LaundryBasket } from "./LaundryBasket";
 
 export class Player extends Actor {
     static radius: number = 5;
-    static moveSpeed: number = 50;
+    static moveSpeed: number = 75;
 
     interacting: boolean = false;
 
@@ -34,6 +34,16 @@ export class Player extends Actor {
             role: new Hero(),
             movement: new ManualMovement
         })
+        
+        this.role.prerenderTasks.push((_elapsedMs: number, actor?: Actor) => {
+            if(!actor) {
+                return;
+            } else if (!actor.enabled) {
+                return;
+            }
+
+            this.updateBasket();
+        });
 
         this.setKeyHandlers();
     }

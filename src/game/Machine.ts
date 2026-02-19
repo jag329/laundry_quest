@@ -1,4 +1,4 @@
-import { Actor, BoxBody, FilledBox, InertMovement, ManualMovement, Obstacle, stage, TextSprite, TimedEvent } from "../jetlag";
+import { Actor, BoxBody, FilledBox, InertMovement, Obstacle, stage, TextSprite, TimedEvent } from "../jetlag";
 import { LaundryBasket, BasketStatus } from "./LaundryBasket";
 import { Player } from "./Player";
 
@@ -56,6 +56,7 @@ export abstract class Machine extends Actor {
     public startOperation(onComplete?: () => void) {
         this.operationComplete = false;
         this.operation = new TimedEvent(this.timeToComplete, false, () => {
+            //this code is called when the operation is complete
             this.operationComplete = true;
             if (onComplete) {
                 onComplete();

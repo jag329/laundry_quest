@@ -31,7 +31,7 @@ export class Orderer extends Actor {
                 heroCollision: (orderer, player) => {
                     if ((player as Player).interacting) {
                         if (!(orderer as Orderer).generatedBasket) {
-                            const basket = (orderer as Orderer).generateBasket({ x: 20, y: 0 });
+                            (orderer as Orderer).generateBasket({ x: 20, y: 0 });
                         } else if ((player as Player).basket?.getStatus() === "Clean" && (player as Player).basket?.color === (orderer as Orderer).color) {
                             (player as Player).dropBasket(true);
                             (orderer as Orderer).generatedBasket = false;

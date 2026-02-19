@@ -11,7 +11,7 @@ export class DryingMachine extends Machine {
         })
     }
 
-    putInLaundry(basket: LaundryBasket): boolean {
+    public putInLaundry(basket: LaundryBasket): boolean {
         if (this.hasLaundry || basket.getStatus() !== BasketStatus.Wet) {
             return false;
         }

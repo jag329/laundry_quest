@@ -1,8 +1,8 @@
-import { Actor, BoxBody, CircleBody, FilledBox, FilledCircle, FilledPolygon, GridSystem, Hero, JetLagGameConfig, KeyCodes, ManualMovement, Obstacle, PolygonBody, initializeAndLaunch, stage, TimedEvent } from "../jetlag";
+import { JetLagGameConfig, initializeAndLaunch } from "../jetlag";
 import { DryingMachine } from "./DryingMachine";
-import { LaundryBasket } from "./LaundryBasket";
 import { Orderer } from "./Orderer";
 import { Player } from "./Player";
+import { SoapSud } from "./SoapSuds";
 import { WashingMachine } from "./WashingMachine";
 
 /**
@@ -40,24 +40,32 @@ function builder(_level: number) {
     cy: 40
   });
 
-  let washingMachine = new WashingMachine({
+  new WashingMachine({
     color: "#00ffea",
     cx: 70,
     cy: 40
   });
 
-  let dryingMachine = new DryingMachine({
+  new DryingMachine({
     color: "#ff9d00",
     cx: 90,
     cy: 40
   });
 
-  let orderer = Orderer.generateRandomOrderer({ cx: 15, cy: 80, width: 10, height: 10 });
+  Orderer.generateRandomOrderer({ cx: 15, cy: 80, width: 10, height: 10 });
+
+  new SoapSud({
+    cx: 0, 
+    cy: 0,
+    player: player
+  });
 
   // Set up a timer to update the basket position each frame when picked up
-  stage.world.timer.addEvent(new TimedEvent(0.001, true, () => {
-    player.updateBasket();
-  }));
+  //stage.world.timer.addEvent(new TimedEvent(0.001, true, () => {
+  //  player.updateBasket();
+  //}));
+
+  //the above code is no longer needed - I figured out how to use prerender tasks
 }
 
 // call the function that starts running the game in the `game-player` div tag
